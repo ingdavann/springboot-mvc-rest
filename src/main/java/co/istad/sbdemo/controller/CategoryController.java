@@ -1,21 +1,26 @@
 package co.istad.sbdemo.controller;
 
+import co.istad.sbdemo.dto.CategoryRequest;
+import co.istad.sbdemo.dto.CategoryResponse;
 import co.istad.sbdemo.model.Product;
+import co.istad.sbdemo.service.impl.CategoryServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/categories")
+@RequiredArgsConstructor
 public class CategoryController {
+    private final CategoryServiceImpl categoryService;
     @Operation(summary = "Get all categories")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the categories",
@@ -28,11 +33,28 @@ public class CategoryController {
 
 
     @GetMapping
-    Map<String, Object> findCategories(){
-        Map<String, Object> data = new HashMap<>();
-        data.put("message", "Categories have been found successfully");
-        data.put("data", List.of("Technology", "Education", "Travel"));
-        return data;
+    List<CategoryResponse> findCategories(){
+        return categoryService.findCategories();
+    }
+
+    @PostMapping
+    void createNewCategory(@Valid @RequestBody CategoryRequest categoryRequest){
+        categoryService.crateNewCategory(categoryRequest);
+    }
+
+    @GetMapping("/{id}")
+    CategoryResponse findCategoryById(@PathVariable Integer id){
+        return categoryService.findCategoryById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    void deleteCategoryById(Integer id){
+        categoryService.deleteCategoryById(id);
+    }
+
+    @PutMapping("/{id}")
+    CategoryResponse editCategoryById(@PathVariable Integer id, @Valid @RequestBody CategoryRequest categoryRequest){
+        return categoryService.editCategoryById(id,categoryRequest);
     }
 
 }

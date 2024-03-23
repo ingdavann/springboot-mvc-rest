@@ -20,6 +20,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	// Dependency for inject Swagger
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.4.0'
+	// Add Dependency Data JPA
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	// Add PostgresSQL
+	runtimeOnly 'org.postgresql:postgresql'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'

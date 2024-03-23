@@ -1,0 +1,12 @@
+package co.istad.sbdemo.dto;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+public record CategoryResponse(
+        @NotBlank
+        @Size(max = 40)
+        String name,
+        String description
+) {
+}

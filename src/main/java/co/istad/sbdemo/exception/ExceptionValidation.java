@@ -1,10 +1,12 @@
 package co.istad.sbdemo.exception;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.ResponseStatusException;
 
 
 import java.util.ArrayList;
@@ -14,6 +16,14 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class ExceptionValidation {
+
+    @ExceptionHandler(ResponseStatusException.class)
+    ResponseEntity<?> handleExceptionError(ResponseStatusException exception){
+        return ResponseEntity.status(exception.getStatusCode())
+                .body(
+                        Map.of("error", exception.getReason())
+                );
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
