@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer>{
+    boolean existsByUuid(String uuid);
+    Product findProductByUuid(String uuid);
 }

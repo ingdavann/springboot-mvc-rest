@@ -71,6 +71,7 @@ public class CategoryServiceImpl implements CategoriesService {
 
     @Override
     public CategoryResponse findCategoryById(Integer id) {
+
         Category category = categoryRepository.findById(id)
                 .orElseThrow(()->new ResponseStatusException(
                         HttpStatus.NOT_FOUND,
